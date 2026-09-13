@@ -1,54 +1,64 @@
-# 6T SRAM cell and 2x2 array
+![6T SRAM cell and array](assets/header.svg)
 
-Transistor-level storage with differential bitlines and wordline-controlled access.
-The test writes both data polarities, reads both rows, overwrites one row, and checks
-that the other row retains its contents.
+# 6T SRAM Memory Cell & Array
 
-This is a newly implemented reference design; see [provenance](PROVENANCE.md).
-It uses illustrative Level-1 models, not recovered Cadence schematics or a foundry PDK.
+[![Verify](https://github.com/michaelcolby-git/sram-6t-array/actions/workflows/verify.yml/badge.svg)](https://github.com/michaelcolby-git/sram-6t-array/actions/workflows/verify.yml)
 
-## Run
+A transistor-level 6T cell and 2×2 word-organized array, with differential bitlines,
+precharge, and wordline control. The simulation exercises both stored polarities,
+reads both rows, overwrites one row, and checks retention in the unselected row.
 
-```sh
-python scripts/verify.py
-```
+| Organization | Verification | Operating configurations |
+|---|---|---|
+| 2 rows × 2 columns | 128 cell-state + 32 read-differential checks | 4 supply / temperature / sizing cases |
 
-Requires Python 3.10+ and ngspice. No Python packages are needed. Runs nominal and
-selected voltage/temperature/device-ratio configurations and fails on corrupted cell
-state, invalid logic levels, inadequate bitline differential, or simulator errors.
-Raw waveforms, logs, actual measured values, and an SVG plot are written to `build/`.
+**[Cell schematic netlist](spice/cell.cir) · [Array netlist](spice/array_2x2.cir) · [Measurements](docs/MEASUREMENTS.md) · [Results](results/VALIDATION.md)**
 
-## Circuit
+## Cell architecture
 
 ```mermaid
 flowchart LR
-  BL[BL] --- AX0["Access NMOS | WL"]
-  AX0 --- Q[Q]
-  Q --> INV1["CMOS inverter"]
-  INV1 --> QB[QB]
-  QB --> INV0["CMOS inverter"]
-  INV0 --> Q
-  QB --- AX1["Access NMOS | WL"]
-  AX1 --- BLB[BLB]
+  BL[BL] --- AX0["Access NMOS · WL"] --- Q[Q]
+  Q --> I1["CMOS inverter"] --> QB[QB]
+  QB --> I0["CMOS inverter"] --> Q
+  QB --- AX1["Access NMOS · WL"] --- BLB[BLB]
 ```
 
-Each cell has two CMOS inverters and two access NMOS devices. Nominal widths are
-pull-down 2.0 um, access 1.0 um, pull-up 0.6 um; channel length is 0.18 um.
-Nominal supply is 1.8 V. These are explicit design assumptions, not historical measurements.
+| Nominal parameter | Value |
+|---|---|
+| Supply | 1.8 V |
+| Channel length | 0.18 µm |
+| Pull-down / access / pull-up widths | 2.0 / 1.0 / 0.6 µm |
+| Bitline / storage-node capacitance | 100 / 2 fF |
 
-- [Six-transistor cell](spice/cell.cir)
-- [Generated 2x2 array](spice/array_2x2.cir)
-- [Stimulus and checks](scripts/verify.py)
-- [Measurement scope and next experiments](docs/MEASUREMENTS.md)
+The cross-coupled inverters hold complementary state. Access transistors connect the
+cell to precharged bitlines during reads and driven bitlines during writes.
+[Design notes](docs/DESIGN_NOTES.md) explain the read-stability/write-ability tradeoff.
 
-Peripheral write drivers and precharge controls are ideal switches. There is no
-transistor sense amplifier or address decoder. The chosen 100 fF bitline and 2 fF
-storage-node loads are illustrative. Level-1 devices do not support credible modern
-subthreshold leakage or variability predictions. Read success is not an SNM measurement.
+## Reproduce the results
 
-## Measured validation
+Requirements: Python 3.10+ and ngspice on PATH.
 
-**128 cell-state checks and 32 read-differential checks passed** across four
-configurations. See the [measured table and logs](results/VALIDATION.md).
+```sh
+python -m unittest discover -s tests -p "test_*.py" -v
+python scripts/verify.py
+```
+
+The regression writes the generated decks, raw waveform tables, logs, measured JSON,
+and an operation plot to `build/`. It fails on an incorrect stored state, ambiguous
+logic level, or insufficient read differential. `NGSPICE` can specify an executable path.
+
+## Write, read & retention
 
 ![Write, read and retention waveform](results/array-operation.svg)
+
+All four configurations passed the 128 stored-state and 32 read-differential checks.
+The [results table](results/VALIDATION.md) reports the minimum sampled differential
+for each configuration, and the [timing table](docs/MEASUREMENTS.md) identifies every
+write, precharge, read, and hold interval.
+
+The model uses generic Level-1 MOS devices and ideal peripheral switches. It evaluates
+read/write/hold behavior; it does not quantify foundry leakage, stochastic device noise,
+static noise margin, or sense-amplifier performance.
+
+Implementation origin and measurement scope are recorded in [PROVENANCE.md](PROVENANCE.md).

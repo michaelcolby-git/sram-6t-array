@@ -15,5 +15,5 @@ Four configurations passed **128 cell-state checks** and **32 read-differential 
 
 These numbers apply to the included reference implementation and test conditions.
 Local checks are not formal verification, timing closure, silicon measurements, or
-a reproduction of original resume measurements. GitHub Actions must be checked
-separately after publishing; no cloud run is asserted by this local report.
+a reproduction of original resume measurements. GitHub Actions independently reruns the regression; the live workflow badge links
+to its current status.

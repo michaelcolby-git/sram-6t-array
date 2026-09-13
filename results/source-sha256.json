@@ -1,11 +1,10 @@
 {
-  "recorded_at_utc": "2026-09-13T03:25:13.481191+00:00",
   "sha256": {
-    "spice/array_2x2.cir": "fadba2a8e2d6c9e83e2d17f369db3c784fb38a1fbb6a33d6c83dfdcc0f53ea3c",
-    "spice/cell.cir": "dac470ff500d50f33684ef407dfa209e751ced7579dd4bf77716617a277b6ae4",
-    "scripts/spice_utils.py": "4cd0e510ed941cdb81d4d06441d56fc009e4305505cdb201291230b33938e2a6",
-    "scripts/verify.py": "f1d9c679f980faba53289f9862d066dd588e07bd480f298c4c776aae9af55578",
-    "tests/test_measurements.py": "3d1ec949b1a6f1fbb72659b2970c4b9ed8f06c217457219aa2d852bf1d0f0fe3",
-    ".github/workflows/verify.yml": "babace98d5578cf422fcfe3b946cbe0af60a3d6b7c4d1663621b1eca2eed481d"
+    "spice/array_2x2.cir": "5affa339d9f522fcffcb03ab2fa41d448415ab498948e12975ee29cbf55ad15f",
+    "spice/cell.cir": "922e873af57ed8e7e1d830bdc085e3d0b04cbef754c7ff8a07802528bc3984e2",
+    "scripts/spice_utils.py": "db720ff0ff32aaf458274e573f53e9a2d3d775305e9cff5832eaa9541e839b28",
+    "scripts/verify.py": "ed9550a83040ddec2b495592a6bf58000cd5439abb5a50a18a7cf76a52c286eb",
+    "tests/test_measurements.py": "30d9d03d6271d4cf673d1f8a5e9f9301460e3434c7fc90910168bbbd2b0a7620",
+    ".github/workflows/verify.yml": "ae5b76fcafc8350636fca2fb81a6f71ed896510df060760651caa1c9f25fe9b1"
   }
 }

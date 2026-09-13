@@ -24,22 +24,16 @@ Read differential is sampled about 2 ns after wordline assertion, must have the 
 sign, and must exceed 10% VDD. This threshold is an explicit test criterion, not a
 measured sense-amplifier sensitivity. Voltage/temperature sweeps are not process corners.
 
-## Original evidence needed for stronger claims
+## Metric scope
 
-Static noise margin: use a documented hold/read butterfly method, including read
-bitline/wordline biases, extract the largest inscribed square with a checked numerical
-method, and report both lobes and the smaller margin. Do not call a successful read SNM.
+This regression measures retained logic state and transient bitline differential.
+Static noise margin (SNM) is a separate butterfly-curve metric; successful reads do
+not measure it. Write-trip margin depends on a defined bitline or wordline sweep
+and is not inferred from successful full-swing writes.
 
-Write margin: define the convention (bitline write-trip, wordline write-trip, or static
-write noise margin), sweep the relevant bias, check the stored-state transition, and
-report sweep direction and hysteresis. These metrics are not interchangeable.
-
-Leakage: use calibrated process models with the relevant leakage mechanisms, specify
-stored value and all terminal biases, and separate cell current from ideal peripheral
-current. Generic Level-1 cutoff behavior does not substantiate a realistic leakage claim.
-
-Noise/variability: deterministic voltage perturbation is not stochastic device noise.
-Use a justified noise/Monte Carlo model, seed, distribution, sample size, and operating
-conditions. No such fabricated results are included here.
+The ideal write/precharge network and generic Level-1 devices do not establish
+foundry leakage, stochastic noise, process variability, or sense-amplifier sensitivity.
+Small bitline overshoot from capacitive coupling can make the sampled differential
+slightly larger than VDD in this idealized model.
 
 Reference: [ngspice documentation](https://ngspice.sourceforge.io/docs.html).
