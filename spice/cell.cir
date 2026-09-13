@@ -1,0 +1,11 @@
+* Illustrative 6T SRAM. Level-1 models are not predictive foundry models.
+.model N NMOS (LEVEL=1 VTO=0.45 KP=120u LAMBDA=0.04 CGSO=0.2n CGDO=0.2n)
+.model P PMOS (LEVEL=1 VTO=-0.45 KP=50u LAMBDA=0.04 CGSO=0.2n CGDO=0.2n)
+.subckt sram6t q qb bl blb wl vdd vss params: PD=2u AX=1u PU=0.6u
+Mp0 q qb vdd vdd P W={PU} L=0.18u
+Mn0 q qb vss vss N W={PD} L=0.18u
+Mp1 qb q vdd vdd P W={PU} L=0.18u
+Mn1 qb q vss vss N W={PD} L=0.18u
+Max0 q wl bl vss N W={AX} L=0.18u
+Max1 qb wl blb vss N W={AX} L=0.18u
+.ends sram6t

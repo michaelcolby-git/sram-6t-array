@@ -1,0 +1,11 @@
+{
+  "recorded_at_utc": "2026-09-13T03:25:13.481191+00:00",
+  "sha256": {
+    "spice/array_2x2.cir": "fadba2a8e2d6c9e83e2d17f369db3c784fb38a1fbb6a33d6c83dfdcc0f53ea3c",
+    "spice/cell.cir": "dac470ff500d50f33684ef407dfa209e751ced7579dd4bf77716617a277b6ae4",
+    "scripts/spice_utils.py": "4cd0e510ed941cdb81d4d06441d56fc009e4305505cdb201291230b33938e2a6",
+    "scripts/verify.py": "f1d9c679f980faba53289f9862d066dd588e07bd480f298c4c776aae9af55578",
+    "tests/test_measurements.py": "3d1ec949b1a6f1fbb72659b2970c4b9ed8f06c217457219aa2d852bf1d0f0fe3",
+    ".github/workflows/verify.yml": "babace98d5578cf422fcfe3b946cbe0af60a3d6b7c4d1663621b1eca2eed481d"
+  }
+}

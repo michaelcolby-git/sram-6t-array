@@ -1,0 +1,49 @@
+{
+  "model": "generic Level-1",
+  "cases": [
+    {
+      "name": "array_0",
+      "vdd": 1.8,
+      "temperature_c": 25,
+      "pull_down_w_m": 2e-06,
+      "access_w_m": 1e-06,
+      "pull_up_w_m": 6e-07,
+      "state_checks": 32,
+      "read_checks": 8,
+      "min_read_differential_v": 1.8035396844347
+    },
+    {
+      "name": "array_1",
+      "vdd": 1.62,
+      "temperature_c": 85,
+      "pull_down_w_m": 2e-06,
+      "access_w_m": 1e-06,
+      "pull_up_w_m": 6e-07,
+      "state_checks": 32,
+      "read_checks": 8,
+      "min_read_differential_v": 1.621781834225
+    },
+    {
+      "name": "array_2",
+      "vdd": 1.98,
+      "temperature_c": -20,
+      "pull_down_w_m": 2e-06,
+      "access_w_m": 1e-06,
+      "pull_up_w_m": 6e-07,
+      "state_checks": 32,
+      "read_checks": 8,
+      "min_read_differential_v": 1.9839435445693965
+    },
+    {
+      "name": "array_3",
+      "vdd": 1.8,
+      "temperature_c": 25,
+      "pull_down_w_m": 2.4e-06,
+      "access_w_m": 1e-06,
+      "pull_up_w_m": 6e-07,
+      "state_checks": 32,
+      "read_checks": 8,
+      "min_read_differential_v": 1.80356251241285
+    }
+  ]
+}

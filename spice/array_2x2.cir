@@ -1,0 +1,48 @@
+2x2 SRAM read write hold reference
+.include spice/cell.cir
+.temp 25
+VDD vdd 0 1.8
+.model SW SW(Ron=10 Roff=1e12 Vt=0.5 Vh=0.05)
+X00 q00 qb00 bl0 bb0 wl0 vdd 0 sram6t PD=2e-06 AX=1e-06 PU=6e-07
+Cq00 q00 0 2f
+Cqb00 qb00 0 2f
+X01 q01 qb01 bl1 bb1 wl0 vdd 0 sram6t PD=2e-06 AX=1e-06 PU=6e-07
+Cq01 q01 0 2f
+Cqb01 qb01 0 2f
+X10 q10 qb10 bl0 bb0 wl1 vdd 0 sram6t PD=2e-06 AX=1e-06 PU=6e-07
+Cq10 q10 0 2f
+Cqb10 qb10 0 2f
+X11 q11 qb11 bl1 bb1 wl1 vdd 0 sram6t PD=2e-06 AX=1e-06 PU=6e-07
+Cq11 q11 0 2f
+Cqb11 qb11 0 2f
+Vwl0 wl0 0 PWL(0n 0 10n 0 10.1n 1.8 18n 1.8 18.1n 0 50n 0 50.1n 1.8 58n 1.8 58.1n 0 90n 0 90.1n 1.8 98n 1.8 98.1n 0 110n 0 110.1n 1.8 118n 1.8 118.1n 0)
+Vwl1 wl1 0 PWL(0n 0 30n 0 30.1n 1.8 38n 1.8 38.1n 0 70n 0 70.1n 1.8 78n 1.8 78.1n 0 130n 0 130.1n 1.8 138n 1.8 138.1n 0)
+Vwrite write 0 PWL(0n 0 5n 0 5.1n 1 20n 1 20.1n 0 25n 0 25.1n 1 40n 1 40.1n 0 85n 0 85.1n 1 100n 1 100.1n 0)
+Vpre pre 0 PWL(0n 0 42n 0 42.1n 1 48n 1 48.1n 0 62n 0 62.1n 1 68n 1 68.1n 0 102n 0 102.1n 1 108n 1 108.1n 0 122n 0 122.1n 1 128n 1 128.1n 0)
+Vd0 d0 0 PWL(0n 1.8 23n 1.8 23.1n 0.0 150n 0.0)
+Vdb0 db0 0 PWL(0n 0.0 23n 0.0 23.1n 1.8 150n 1.8)
+Sw0 bl0 d0 write 0 SW
+Swb0 bb0 db0 write 0 SW
+Sp0 bl0 vdd pre 0 SW
+Spb0 bb0 vdd pre 0 SW
+Cbl0 bl0 0 100f
+Cbb0 bb0 0 100f
+Vd1 d1 0 PWL(0n 0 23n 0 23.1n 1.8 150n 1.8)
+Vdb1 db1 0 PWL(0n 1.8 23n 1.8 23.1n 0.0 150n 0.0)
+Sw1 bl1 d1 write 0 SW
+Swb1 bb1 db1 write 0 SW
+Sp1 bl1 vdd pre 0 SW
+Spb1 bb1 vdd pre 0 SW
+Cbl1 bl1 0 100f
+Cbb1 bb1 0 100f
+.ic V(q00)=0 V(qb00)=1.8 V(q01)=0 V(qb01)=1.8 V(q10)=0 V(qb10)=1.8 V(q11)=0 V(qb11)=1.8
+.control
+set noaskquit
+set wr_singlescale
+set wr_vecnames
+tran 0.02n 150n 0 0.02n uic
+let power = -v(vdd)*i(VDD)
+wrdata build/array_0.dat v(q00) v(qb00) v(q01) v(qb01) v(q10) v(qb10) v(q11) v(qb11) v(bl0) v(bb0) v(bl1) v(bb1) v(wl0) v(wl1) power
+quit
+.endc
+.end
